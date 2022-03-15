@@ -7,48 +7,39 @@ using UnityEngine.UI;
 public class PrimitiveType : MonoBehaviour
 {
 
-    public Text nameText;
-    public Text colorText;
-    public Text speedText;
-    public float speed;
-    public Material material;
+    [SerializeField] protected Text nameText;
+    [SerializeField] protected Text colorText;
+    [SerializeField] protected Text speedText;
+    [SerializeField] protected Material material;
+    
+    protected float speed;
     private string materialName;
 
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        material.color = Color.white;
-        ShowInfo();
-    }
-
-    void SetColor()
+    protected virtual void SetColor()
     {
         material.color = Color.green;
     }
 
-    void SetRotationSpeed()
+   protected virtual void SetRotationSpeed()
     {
-        speed = 50.0f;
+        speed = 500.0f;
         transform.Rotate(Vector3.right * speed * Time.deltaTime);
     }
 
-    void ShowInfo()
+    protected virtual void OnMouseDown()
     {
-        if (Input.GetKey(KeyCode.Mouse0))
-        {
-            string materialName = material.name;
-            nameText.text = "Name: " + gameObject.name;
-            colorText.text = "Color: " + materialName;
-            speedText.text = "Speed: " + speed;
+        string materialName = material.name;
+        nameText.text = "Name: " + gameObject.name;
+        colorText.text = "Color: " + materialName;
+        speedText.text = "Speed: " + speed;
 
-            SetColor();
-            SetRotationSpeed();
-        }
+        SetRotationSpeed();
+        SetColor();
+    }
+
+    protected virtual void OnMouseUp()
+    {
+        material.color = Color.white;
     }
 }
